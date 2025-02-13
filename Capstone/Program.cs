@@ -4,6 +4,9 @@ using Microsoft.Identity.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+options.UseNgpsql(builder.Configuration.GetConnectionString('DefaultConnection'));
+
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
