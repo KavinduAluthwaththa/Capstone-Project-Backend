@@ -27,6 +27,4 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
     public DbSet<CropDisease> GrowingCrop { get; set; }
 
 
-
-
 }

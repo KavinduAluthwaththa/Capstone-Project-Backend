@@ -12,7 +12,7 @@ namespace Capstone.Models.Entities
         public string FertilizerType { get; set; }
         public string RecommendedAmount { get; set; }
 
-        [ForeignKey("Crop")]
+        [ForeignKey("CropID")]
         public virtual Crop Crop { get; set; }
 
     }

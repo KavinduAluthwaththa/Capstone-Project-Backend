@@ -5,16 +5,16 @@ namespace Capstone.Models.Entities
 {
     public class CropDisease
     {
-        [Key, Column(Order =0)]
+        [Key]
+        public int cdid { get; set; }
         public int CropID { get; set; }
-        [Key, Column(Order = 1)]
         public int DiseaseID { get; set; }
         public string Date { get; set; }
 
-        [ForeignKey("Crop")]
+        [ForeignKey("CropID")]
         public virtual Crop Crop { get; set; }
 
-        [ForeignKey("Disease")]
+        [ForeignKey("DiseaseID")]
         public virtual Disease Disease { get; set; }
     }
 }

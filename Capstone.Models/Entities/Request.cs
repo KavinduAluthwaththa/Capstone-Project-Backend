@@ -14,10 +14,10 @@ namespace Capstone.Models.Entities
         //foreign key
         public int ShopID { get; set; }
 
-        [ForeignKey("Farmer")]
+        [ForeignKey("FarmerID")]
         public virtual Farmer Farmer { get; set; }
 
-        [ForeignKey("Shop")]
+        [ForeignKey("ShopID")]
         public virtual Shop Shop { get; set; }
 
 

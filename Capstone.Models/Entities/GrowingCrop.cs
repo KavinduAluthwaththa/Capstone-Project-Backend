@@ -5,16 +5,16 @@ namespace Capstone.Models.Entities
 {
     public class GrowingCrop
     {
-        [Key, Column(Order = 0)]
+        [Key]
+        public int cfid { get; set; }
         public int CropID { get; set; }
-        [Key, Column(Order = 1)]
         public int FarmerID { get; set; }
         public string Date { get; set; }
 
-        [ForeignKey("Crop")]
+        [ForeignKey("CropID")]
         public virtual Crop Crop { get; set; }
 
-        [ForeignKey("Farmer")]
+        [ForeignKey("FarmerID")]
         public virtual Farmer Farmer { get; set; }
     }
 }
