@@ -7,6 +7,7 @@ namespace Capstone.Models.Entities
     {
         [Key]
         public int FertilizerID { get; set; }
+        //foreign key
         public int CropID { get; set; }
         public string FertilizerType { get; set; }
         public string RecommendedAmount { get; set; }

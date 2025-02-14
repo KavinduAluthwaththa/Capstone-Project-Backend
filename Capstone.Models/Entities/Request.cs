@@ -9,7 +9,9 @@ namespace Capstone.Models.Entities
         public int RequestID { get; set; }
         public string Date { get; set; }
         public int Amount { get; set; }
+        //foreign key
         public int FarmerID { get; set; }
+        //foreign key
         public int ShopID { get; set; }
 
         [ForeignKey("Farmer")]
