@@ -5,9 +5,9 @@ namespace Capstone.Models.Entities
 {
     public class GrowingCrop
     {
-        [Key]
+        [Key, Column(Order = 0)]
         public int CropID { get; set; }
-        [Key]
+        [Key, Column(Order = 1)]
         public int FarmerID { get; set; }
         public string Date { get; set; }
 

@@ -5,9 +5,9 @@ namespace Capstone.Models.Entities
 {
     public class CropShop
     {
-        [Key]
+        [Key, Column(Order = 0)]
         public int CropID { get; set; }
-        [Key]
+        [Key, Column(Order = 1)]
         public int ShopID { get; set; }
         public string Date { get; set; }
 
