@@ -8,6 +8,6 @@ namespace Capstone.Models.Entities
         public int DiseaseID { get; set; }
         public string DiseaseName { get; set; }
         public string Symptoms { get; set; }
-        public string Treatement { get; set; }
+        public string Treatment { get; set; }
     }
 }

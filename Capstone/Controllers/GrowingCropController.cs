@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Capstone.Models.Entities;
+using Capstone.Persistence.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Capstone.Controllers
 {
@@ -7,5 +9,116 @@ namespace Capstone.Controllers
     [ApiController]
     public class GrowingCropController : ControllerBase
     {
+        private readonly AppDbContext _context;
+
+        public GrowingCropController(AppDbContext context)
+        {
+            _context = context;
+        }
+
+        // GET: api/GrowingCrop
+        [HttpGet]
+        public async Task<IActionResult> GetAllGrowingCrops()
+        {
+            var growingCrops = await _context.GrowingCrop
+                .Include(g => g.Crop)
+                .Include(g => g.Farmer)
+                .ToListAsync();
+
+            return Ok(growingCrops);
+        }
+
+        // GET: api/GrowingCrop/{id}
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetGrowingCrop(int id)
+        {
+            var growingCrop = await _context.GrowingCrop
+                .Include(g => g.Crop)
+                .Include(g => g.Farmer)
+                .FirstOrDefaultAsync(g => g.cfid == id);
+
+            if (growingCrop == null)
+            {
+                return NotFound(new { message = "Growing crop record not found" });
+            }
+
+            return Ok(growingCrop);
+        }
+
+        // POST: api/GrowingCrop
+        [HttpPost]
+        public async Task<IActionResult> AddGrowingCrop([FromBody] GrowingCrop growingCrop)
+        {
+            if (growingCrop == null)
+            {
+                return BadRequest(new { message = "Growing crop data is required." });
+            }
+
+            try
+            {
+                _context.GrowingCrop.Add(growingCrop);
+                await _context.SaveChangesAsync();
+
+                return CreatedAtAction(nameof(GetGrowingCrop), new { id = growingCrop.cfid }, growingCrop);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while adding the growing crop.", error = ex.Message });
+            }
+        }
+
+        // PUT: api/GrowingCrop/{id}
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateGrowingCrop(int id, [FromBody] GrowingCrop growingCrop)
+        {
+            if (growingCrop == null)
+            {
+                return BadRequest(new { message = "Growing crop data is required." });
+            }
+
+            var existingGrowingCrop = await _context.GrowingCrop.FindAsync(id);
+            if (existingGrowingCrop == null)
+            {
+                return NotFound(new { message = "Growing crop record not found." });
+            }
+
+            try
+            {
+                existingGrowingCrop.CropID = growingCrop.CropID;
+                existingGrowingCrop.FarmerID = growingCrop.FarmerID;
+                existingGrowingCrop.Date = growingCrop.Date;
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Growing crop updated successfully.", growingCrop = existingGrowingCrop });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while updating the growing crop.", error = ex.Message });
+            }
+        }
+
+        // DELETE: api/GrowingCrop/{id}
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteGrowingCrop(int id)
+        {
+            var growingCrop = await _context.GrowingCrop.FindAsync(id);
+            if (growingCrop == null)
+            {
+                return NotFound(new { message = "Growing crop record not found" });
+            }
+
+            try
+            {
+                _context.GrowingCrop.Remove(growingCrop);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "Growing crop deleted successfully" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "An error occurred while deleting the growing crop.", error = ex.Message });
+            }
+        }
     }
 }

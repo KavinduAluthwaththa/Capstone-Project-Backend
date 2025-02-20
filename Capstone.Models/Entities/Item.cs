@@ -7,6 +7,6 @@ namespace Capstone.Models.Entities
         [Key]
         public int ItemID { get; set; }
         public int Amount { get; set; }
-        public int Date { get; set; }
+        public DateTime Date { get; set; }
     }
 }
