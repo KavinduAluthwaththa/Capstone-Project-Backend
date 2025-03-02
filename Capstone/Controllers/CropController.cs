@@ -20,9 +20,9 @@ namespace Capstone.Controllers
 
         //get all crop details
         [HttpGet]
-        public async Task<IActionResult> GetAllCrops(AppDbContext DbContext)
+        public async Task<IActionResult> GetAllCrops()
         {
-            var crops = await DbContext.Crops
+            var crops = await _context.Crops
                 .Select(c => new SelectListItem
                 {
                     Value = c.CropID.ToString(),
