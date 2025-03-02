@@ -20,7 +20,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllGrowingCrops()
         {
-            var growingCrops = await _context.GrowingCrop
+            var growingCrops = await _context.GrowingCrops
                 .Include(g => g.Crop)
                 .Include(g => g.Farmer)
                 .ToListAsync();
@@ -32,7 +32,7 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetGrowingCrop(int id)
         {
-            var growingCrop = await _context.GrowingCrop
+            var growingCrop = await _context.GrowingCrops
                 .Include(g => g.Crop)
                 .Include(g => g.Farmer)
                 .FirstOrDefaultAsync(g => g.cfid == id);
@@ -56,7 +56,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.GrowingCrop.Add(growingCrop);
+                _context.GrowingCrops.Add(growingCrop);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetGrowingCrop), new { id = growingCrop.cfid }, growingCrop);
@@ -76,7 +76,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Growing crop data is required." });
             }
 
-            var existingGrowingCrop = await _context.GrowingCrop.FindAsync(id);
+            var existingGrowingCrop = await _context.GrowingCrops.FindAsync(id);
             if (existingGrowingCrop == null)
             {
                 return NotFound(new { message = "Growing crop record not found." });
@@ -102,7 +102,7 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGrowingCrop(int id)
         {
-            var growingCrop = await _context.GrowingCrop.FindAsync(id);
+            var growingCrop = await _context.GrowingCrops.FindAsync(id);
             if (growingCrop == null)
             {
                 return NotFound(new { message = "Growing crop record not found" });
@@ -110,7 +110,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.GrowingCrop.Remove(growingCrop);
+                _context.GrowingCrops.Remove(growingCrop);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Growing crop deleted successfully" });

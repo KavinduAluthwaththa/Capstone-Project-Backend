@@ -20,7 +20,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRequests()
         {
-            var requests = await _context.Request
+            var requests = await _context.Requests
                 .Include(r => r.Farmer)
                 .Include(r => r.Shop)
                 .ToListAsync();
@@ -31,7 +31,7 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRequestById(int id)
         {
-            var request = await _context.Request
+            var request = await _context.Requests
                 .Include(r => r.Farmer)
                 .Include(r => r.Shop)
                 .FirstOrDefaultAsync(r => r.RequestID == id);
@@ -55,7 +55,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Request.Add(request);
+                _context.Requests.Add(request);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetRequestById), new { id = request.RequestID }, request);
@@ -75,7 +75,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Request data is required." });
             }
 
-            var existingRequest = await _context.Request.FindAsync(id);
+            var existingRequest = await _context.Requests.FindAsync(id);
             if (existingRequest == null)
             {
                 return NotFound(new { message = "Request not found" });
@@ -102,7 +102,7 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRequest(int id)
         {
-            var request = await _context.Request.FindAsync(id);
+            var request = await _context.Requests.FindAsync(id);
 
             if (request == null)
             {
@@ -111,7 +111,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Request.Remove(request);
+                _context.Requests.Remove(request);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Request deleted successfully" });

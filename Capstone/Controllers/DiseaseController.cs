@@ -20,7 +20,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllDiseases()
         {
-            var diseases = await _context.Disease.ToListAsync();
+            var diseases = await _context.Diseases.ToListAsync();
             return Ok(diseases);
         }
 
@@ -28,7 +28,7 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDisease(int id)
         {
-            var disease = await _context.Disease.FindAsync(id);
+            var disease = await _context.Diseases.FindAsync(id);
 
             if (disease == null)
             {
@@ -56,7 +56,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Disease.Add(disease);
+                _context.Diseases.Add(disease);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetDisease), new { id = disease.DiseaseID }, disease);
@@ -76,7 +76,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Disease data is required." });
             }
 
-            var existingDisease = await _context.Disease.FindAsync(id);
+            var existingDisease = await _context.Diseases.FindAsync(id);
             if (existingDisease == null)
             {
                 return NotFound(new { message = "Disease not found." });
@@ -102,7 +102,7 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDisease(int id)
         {
-            var disease = await _context.Disease.FindAsync(id);
+            var disease = await _context.Diseases.FindAsync(id);
             if (disease == null)
             {
                 return NotFound(new { message = "Disease not found" });
@@ -110,7 +110,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Disease.Remove(disease);
+                _context.Diseases.Remove(disease);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Disease deleted successfully" });

@@ -22,7 +22,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllFertilizers()
         {
-            var fertilizers = await _context.Fertilizer
+            var fertilizers = await _context.Fertilizers
                 .Include(f => f.Crop)
                 .Select(f => new
                 {
@@ -51,7 +51,7 @@ namespace Capstone.Controllers
             }
 
             // Ensure the referenced Crop exists
-            var cropExists = await _context.Crop.AnyAsync(c => c.CropID == fertilizer.CropID);
+            var cropExists = await _context.Crops.AnyAsync(c => c.CropID == fertilizer.CropID);
             if (!cropExists)
             {
                 return BadRequest(new { message = "Invalid CropID. The specified crop does not exist." });
@@ -59,7 +59,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Fertilizer.Add(fertilizer);
+                _context.Fertilizers.Add(fertilizer);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetAllFertilizers), new { id = fertilizer.FertilizerID }, fertilizer);
@@ -74,13 +74,13 @@ namespace Capstone.Controllers
         [HttpDelete("{FertilizerID}")]
         public async Task<IActionResult> DeleteFertilizer(int FertilizerID)
         {
-            var fertilizer = await _context.Fertilizer.FindAsync(FertilizerID);
+            var fertilizer = await _context.Fertilizers.FindAsync(FertilizerID);
             if (fertilizer == null)
             {
                 return NotFound(new { message = "Fertilizer not found." });
             }
 
-            _context.Fertilizer.Remove(fertilizer);
+            _context.Fertilizers.Remove(fertilizer);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Fertilizer deleted successfully." });
@@ -100,7 +100,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Fertilizer Type and Recommended Amount are required." });
             }
 
-            var existingFertilizer = await _context.Fertilizer.FindAsync(FertilizerID);
+            var existingFertilizer = await _context.Fertilizers.FindAsync(FertilizerID);
             if (existingFertilizer == null)
             {
                 return NotFound(new { message = "Fertilizer not found." });

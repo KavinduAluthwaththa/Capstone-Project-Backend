@@ -20,7 +20,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllPesticides()
         {
-            var pesticides = await _context.Pesticide.ToListAsync();
+            var pesticides = await _context.Pesticides.ToListAsync();
             return Ok(pesticides);
         }
 
@@ -28,7 +28,7 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPesticideById(int id)
         {
-            var pesticide = await _context.Pesticide.FindAsync(id);
+            var pesticide = await _context.Pesticides.FindAsync(id);
 
             if (pesticide == null)
             {
@@ -49,7 +49,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Pesticide.Add(pesticide);
+                _context.Pesticides.Add(pesticide);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetPesticideById), new { id = pesticide.PesticideID }, pesticide);
@@ -69,7 +69,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Pesticide data is required." });
             }
 
-            var existingPesticide = await _context.Pesticide.FindAsync(id);
+            var existingPesticide = await _context.Pesticides.FindAsync(id);
             if (existingPesticide == null)
             {
                 return NotFound(new { message = "Pesticide not found" });
@@ -94,7 +94,7 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePesticide(int id)
         {
-            var pesticide = await _context.Pesticide.FindAsync(id);
+            var pesticide = await _context.Pesticides.FindAsync(id);
 
             if (pesticide == null)
             {
@@ -103,7 +103,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Pesticide.Remove(pesticide);
+                _context.Pesticides.Remove(pesticide);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Pesticide deleted successfully" });

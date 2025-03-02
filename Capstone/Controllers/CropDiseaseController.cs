@@ -21,7 +21,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCropDiseases()
         {
-            var cropDisease = await _context.CropDisease
+            var cropDisease = await _context.CropDiseases
                 .Include(cd => cd.Crop)
                 .Include(cd => cd.Disease)
                 .Select(cd => new
@@ -51,8 +51,8 @@ namespace Capstone.Controllers
             }
 
             // Validate CropID and DiseaseID
-            var cropExists = await _context.Crop.AnyAsync(c => c.CropID == cropDisease.CropID);
-            var diseaseExists = await _context.Disease.AnyAsync(d => d.DiseaseID == cropDisease.DiseaseID);
+            var cropExists = await _context.Crops.AnyAsync(c => c.CropID == cropDisease.CropID);
+            var diseaseExists = await _context.Diseases.AnyAsync(d => d.DiseaseID == cropDisease.DiseaseID);
 
             if (!cropExists)
             {
@@ -66,7 +66,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.CropDisease.Add(cropDisease);
+                await _context.CropDiseases.AddAsync(cropDisease);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetAllCropDiseases), new { id = cropDisease.cdid }, cropDisease);
@@ -81,13 +81,13 @@ namespace Capstone.Controllers
         [HttpDelete("{cdid}")]
         public async Task<IActionResult> DeleteCropDisease(int cdid)
         {
-            var cropDisease = await _context.CropDisease.FindAsync(cdid);
+            var cropDisease = await _context.CropDiseases.FindAsync(cdid);
             if (cropDisease == null)
             {
                 return NotFound(new { message = "Crop disease record not found." });
             }
 
-            _context.CropDisease.Remove(cropDisease);
+            _context.CropDiseases.Remove(cropDisease);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Crop disease record deleted successfully." });
@@ -107,15 +107,15 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Date is required." });
             }
 
-            var existingCropDisease = await _context.CropDisease.FindAsync(cdid);
+            var existingCropDisease = await _context.CropDiseases.FindAsync(cdid);
             if (existingCropDisease == null)
             {
                 return NotFound(new { message = "Crop disease record not found." });
             }
 
             // Validate CropID and DiseaseID
-            var cropExists = await _context.Crop.AnyAsync(c => c.CropID == cropDisease.CropID);
-            var diseaseExists = await _context.Disease.AnyAsync(d => d.DiseaseID == cropDisease.DiseaseID);
+            var cropExists = await _context.Crops.AnyAsync(c => c.CropID == cropDisease.CropID);
+            var diseaseExists = await _context.Diseases.AnyAsync(d => d.DiseaseID == cropDisease.DiseaseID);
 
             if (!cropExists)
             {
@@ -140,5 +140,9 @@ namespace Capstone.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while updating the crop disease record.", error = ex.Message });
+            }
+        }
+    }
+}
 
 

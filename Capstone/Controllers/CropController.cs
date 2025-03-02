@@ -22,7 +22,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCrops(AppDbContext DbContext)
         {
-            var crops = await DbContext.Crop
+            var crops = await DbContext.Crops
                 .Select(c => new SelectListItem
                 {
                     Value = c.CropID.ToString(),
@@ -52,7 +52,7 @@ namespace Capstone.Controllers
             try
             {
                 // Add the new crop to the database
-                _context.Crop.Add(crop);
+                _context.Crops.Add(crop);
                 await _context.SaveChangesAsync();
 
                 // Return a successful response with the added crop
@@ -69,13 +69,13 @@ namespace Capstone.Controllers
         [HttpDelete("{CropId}")]
         public async Task<IActionResult> DeleteCrop(int CropId)
         {
-            var crop = await _context.Crop.FindAsync(CropId);
+            var crop = await _context.Crops.FindAsync(CropId);
             if (crop == null)
             {
                 return NotFound(new { message = "Crop not found" });
             }
 
-            _context.Crop.Remove(crop);
+            _context.Crops.Remove(crop);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Crop deleted successfully" });
@@ -98,7 +98,7 @@ namespace Capstone.Controllers
             }
 
             // Find the existing crop
-            var existingCrop = await _context.Crop.FindAsync(CropId);
+            var existingCrop = await _context.Crops.FindAsync(CropId);
             if (existingCrop == null)
             {
                 return NotFound(new { message = "Crop not found." });

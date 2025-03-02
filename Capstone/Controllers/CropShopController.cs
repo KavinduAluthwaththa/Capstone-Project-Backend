@@ -21,7 +21,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCropShops()
         {
-            var cropShops = await _context.CropShop
+            var cropShops = await _context.CropShops
                 .Include(cs => cs.Crop)
                 .Include(cs => cs.Shop)
                 .ToListAsync();
@@ -32,7 +32,7 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCropShopById(int id)
         {
-            var cropShop = await _context.CropShop
+            var cropShop = await _context.CropShops
                 .Include(cs => cs.Crop)
                 .Include(cs => cs.Shop)
                 .FirstOrDefaultAsync(cs => cs.csid == id);
@@ -61,7 +61,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.CropShop.Add(cropShop);
+                _context.CropShops.Add(cropShop);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetCropShopById), new { id = cropShop.csid }, cropShop);
@@ -81,7 +81,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "CropShop data is required." });
             }
 
-            var existingCropShop = await _context.CropShop.FindAsync(id);
+            var existingCropShop = await _context.CropShops.FindAsync(id);
             if (existingCropShop == null)
             {
                 return NotFound(new { message = "CropShop record not found." });
@@ -112,13 +112,13 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCropShop(int id)
         {
-            var cropShop = await _context.CropShop.FindAsync(id);
+            var cropShop = await _context.CropShops.FindAsync(id);
             if (cropShop == null)
             {
                 return NotFound(new { message = "CropShop record not found." });
             }
 
-            _context.CropShop.Remove(cropShop);
+            _context.CropShops.Remove(cropShop);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "CropShop record deleted successfully." });

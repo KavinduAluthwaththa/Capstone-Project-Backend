@@ -12,19 +12,19 @@ public class AppDbContext : IdentityDbContext<IdentityUser>
     {
     }
 
-    public DbSet<Farmer> Farmer { get; set; }
-    public DbSet<Crop> Crop { get; set; }
-    public DbSet<Disease> Disease { get; set; }
-    public DbSet<Request> Request { get; set; }
-    public DbSet<Shop> Shop { get; set; }
-    public DbSet<Item> Item { get; set; }
-    public DbSet<MarketData> MarketData { get; set; }
-    public DbSet<Inspector> Inspector { get; set; }
-    public DbSet<Fertilizer> Fertilizer { get; set; }
-    public DbSet<Pesticide> Pesticide { get; set; }
-    public DbSet<CropShop> CropShop { get; set; }
-    public DbSet<GrowingCrop> CropDisease { get; set; }
-    public DbSet<CropDisease> GrowingCrop { get; set; }
+    public DbSet<Farmer> Farmers { get; set; }
+    public DbSet<Crop> Crops { get; set; }
+    public DbSet<Disease> Diseases { get; set; }
+    public DbSet<Request> Requests { get; set; }
+    public DbSet<Shop> Shops { get; set; }
+    public DbSet<Item> Items { get; set; }
+    public DbSet<MarketData> MarketDatas { get; set; }
+    public DbSet<Inspector> Inspectors { get; set; }
+    public DbSet<Fertilizer> Fertilizers { get; set; }
+    public DbSet<Pesticide> Pesticides { get; set; }
+    public DbSet<CropShop> CropShops { get; set; }
+    public DbSet<GrowingCrop> GrowingCrops { get; set; }
+    public DbSet<CropDisease> CropDiseases  { get; set; }
 
 
 }

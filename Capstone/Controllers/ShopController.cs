@@ -20,7 +20,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllShops()
         {
-            var shops = await _context.Shop.ToListAsync();
+            var shops = await _context.Shops.ToListAsync();
             return Ok(shops);
         }
 
@@ -28,7 +28,7 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetShopById(int id)
         {
-            var shop = await _context.Shop.FirstOrDefaultAsync(s => s.ShopID == id);
+            var shop = await _context.Shops.FirstOrDefaultAsync(s => s.ShopID == id);
 
             if (shop == null)
             {
@@ -49,7 +49,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Shop.Add(shop);
+                _context.Shops.Add(shop);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetShopById), new { id = shop.ShopID }, shop);
@@ -69,7 +69,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Shop data is required." });
             }
 
-            var existingShop = await _context.Shop.FindAsync(id);
+            var existingShop = await _context.Shops.FindAsync(id);
             if (existingShop == null)
             {
                 return NotFound(new { message = "Shop not found" });
@@ -95,7 +95,7 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteShop(int id)
         {
-            var shop = await _context.Shop.FindAsync(id);
+            var shop = await _context.Shops.FindAsync(id);
 
             if (shop == null)
             {
@@ -104,7 +104,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Shop.Remove(shop);
+                _context.Shops.Remove(shop);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Shop deleted successfully" });

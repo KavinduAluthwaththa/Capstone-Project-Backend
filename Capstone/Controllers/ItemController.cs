@@ -21,7 +21,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllItems()
         {
-            var items = await _context.Item.ToListAsync();
+            var items = await _context.Items.ToListAsync();
             return Ok(items);
         }
 
@@ -29,7 +29,7 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItemById(int id)
         {
-            var item = await _context.Item.FindAsync(id);
+            var item = await _context.Items.FindAsync(id);
 
             if (item == null)
             {
@@ -50,7 +50,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Item.Add(item);
+                _context.Items.Add(item);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetItemById), new { id = item.ItemID }, item);
@@ -70,7 +70,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Item data is required." });
             }
 
-            var existingItem = await _context.Item.FindAsync(id);
+            var existingItem = await _context.Items.FindAsync(id);
             if (existingItem == null)
             {
                 return NotFound(new { message = "Item not found" });
@@ -95,7 +95,7 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {
-            var item = await _context.Item.FindAsync(id);
+            var item = await _context.Items.FindAsync(id);
 
             if (item == null)
             {
@@ -104,7 +104,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Item.Remove(item);
+                _context.Items.Remove(item);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Item deleted successfully" });

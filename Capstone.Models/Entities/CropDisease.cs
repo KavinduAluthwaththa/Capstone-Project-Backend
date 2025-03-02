@@ -7,10 +7,10 @@ namespace Capstone.Models.Entities
     {
         [Key]
         public int cdid { get; set; }
-        public int CropID { get; set; }
         public int DiseaseID { get; set; }
         public string Date { get; set; }
 
+        public int CropID { get; set; }
         [ForeignKey("CropID")]
         public virtual Crop Crop { get; set; }
 

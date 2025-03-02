@@ -22,7 +22,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllFarmers()
         {
-            var farmers = await _context.Farmer
+            var farmers = await _context.Farmers
                 .Select(f => new SelectListItem
                 {
                     Value = f.FarmerID.ToString(),
@@ -49,7 +49,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Farmer.Add(farmer);
+                _context.Farmers.Add(farmer);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetAllFarmers), new { id = farmer.FarmerID }, farmer);
@@ -64,13 +64,13 @@ namespace Capstone.Controllers
         [HttpDelete("{FarmerID}")]
         public async Task<IActionResult> DeleteFarmer(int FarmerID)
         {
-            var farmer = await _context.Farmer.FindAsync(FarmerID);
+            var farmer = await _context.Farmers.FindAsync(FarmerID);
             if (farmer == null)
             {
                 return NotFound(new { message = "Farmer not found." });
             }
 
-            _context.Farmer.Remove(farmer);
+            _context.Farmers.Remove(farmer);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Farmer deleted successfully." });
@@ -90,7 +90,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Name, Farm Location, and valid Phone Number are required." });
             }
 
-            var existingFarmer = await _context.Farmer.FindAsync(FarmerID);
+            var existingFarmer = await _context.Farmers.FindAsync(FarmerID);
             if (existingFarmer == null)
             {
                 return NotFound(new { message = "Farmer not found." });

@@ -20,7 +20,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllMarketData()
         {
-            var marketData = await _context.MarketData.ToListAsync();
+            var marketData = await _context.MarketDatas.ToListAsync();
             return Ok(marketData);
         }
 
@@ -28,7 +28,7 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetMarketDataById(int id)
         {
-            var marketData = await _context.MarketData.FindAsync(id);
+            var marketData = await _context.MarketDatas.FindAsync(id);
 
             if (marketData == null)
             {
@@ -49,7 +49,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.MarketData.Add(marketData);
+                _context.MarketDatas.Add(marketData);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetMarketDataById), new { id = marketData.MarketDataID }, marketData);
@@ -69,7 +69,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Market data is required." });
             }
 
-            var existingMarketData = await _context.MarketData.FindAsync(id);
+            var existingMarketData = await _context.MarketDatas.FindAsync(id);
             if (existingMarketData == null)
             {
                 return NotFound(new { message = "Market data not found" });
@@ -94,7 +94,7 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteMarketData(int id)
         {
-            var marketData = await _context.MarketData.FindAsync(id);
+            var marketData = await _context.MarketDatas.FindAsync(id);
 
             if (marketData == null)
             {
@@ -103,7 +103,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.MarketData.Remove(marketData);
+                _context.MarketDatas.Remove(marketData);
                 await _context.SaveChangesAsync();
 
                 return Ok(new { message = "Market data deleted successfully" });

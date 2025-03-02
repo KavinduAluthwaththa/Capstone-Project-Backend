@@ -21,7 +21,7 @@ namespace Capstone.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllInspectors()
         {
-            var inspectors = await _context.Inspector.ToListAsync();
+            var inspectors = await _context.Inspectors.ToListAsync();
             return Ok(inspectors);
         }
 
@@ -29,7 +29,7 @@ namespace Capstone.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetInspectorById(int id)
         {
-            var inspector = await _context.Inspector.FindAsync(id);
+            var inspector = await _context.Inspectors.FindAsync(id);
             if (inspector == null)
             {
                 return NotFound(new { message = "Inspector not found." });
@@ -58,7 +58,7 @@ namespace Capstone.Controllers
 
             try
             {
-                _context.Inspector.Add(inspector);
+                _context.Inspectors.Add(inspector);
                 await _context.SaveChangesAsync();
 
                 return CreatedAtAction(nameof(GetInspectorById), new { id = inspector.InspectorID }, inspector);
@@ -78,7 +78,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Inspector data is required." });
             }
 
-            var existingInspector = await _context.Inspector.FindAsync(id);
+            var existingInspector = await _context.Inspectors.FindAsync(id);
             if (existingInspector == null)
             {
                 return NotFound(new { message = "Inspector not found." });
@@ -114,13 +114,13 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteInspector(int id)
         {
-            var inspector = await _context.Inspector.FindAsync(id);
+            var inspector = await _context.Inspectors.FindAsync(id);
             if (inspector == null)
             {
                 return NotFound(new { message = "Inspector not found." });
             }
 
-            _context.Inspector.Remove(inspector);
+            _context.Inspectors.Remove(inspector);
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Inspector deleted successfully." });
