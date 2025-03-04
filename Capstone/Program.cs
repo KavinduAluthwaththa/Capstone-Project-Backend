@@ -54,7 +54,11 @@ builder.Services.AddSwaggerGen(options =>
 string secretKey = "84321DFB66934ECC86D547C5CF5B3EAV";
 
 // Add services to the container.
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(opt=> 
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; 
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
     .AddJwtBearer(options =>
     {
         options.RequireHttpsMetadata = false;

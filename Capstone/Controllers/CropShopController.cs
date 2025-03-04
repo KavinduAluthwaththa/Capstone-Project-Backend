@@ -1,5 +1,6 @@
 ﻿using Capstone.Models.Entities;
 using Capstone.Persistence.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ namespace Capstone.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CropShopController : ControllerBase
     {
         private readonly AppDbContext _context;
