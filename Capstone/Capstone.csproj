@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Capstone.Data\Capstone.Persistence.csproj" />
+    <ProjectReference Include="..\Capstone.Source\Capstone.Shared.csproj" />
   </ItemGroup>
 
 </Project>

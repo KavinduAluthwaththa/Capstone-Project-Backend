@@ -1,5 +1,6 @@
 ﻿using Capstone.Models.Entities;
 using Capstone.Persistence.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,6 +10,7 @@ namespace Capstone.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CropController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -17,8 +19,8 @@ namespace Capstone.Controllers
         {
             _context = context;
         }
-
         //get all crop details
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllCrops()
         {
