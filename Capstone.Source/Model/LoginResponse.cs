@@ -13,5 +13,6 @@ namespace Capstone.Shared.Model
         public string Username { get; set; }
         public string FirstName { get; set; }
         public string UserID { get; set; }
+        public UserTypes userTypes { get; set; }
     }
 }
