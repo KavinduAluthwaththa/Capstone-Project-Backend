@@ -14,7 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Capstone.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/user")]
     [ApiController]
     public class UserController : ControllerBase
     {

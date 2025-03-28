@@ -8,8 +8,8 @@ namespace Capstone.Models.Common.Enums
 {
     public enum UserTypes
     {
-        Farmer, 
-        Inspector, 
-        ShopOwner
+        Farmer = 0, 
+        Inspector = 1, 
+        ShopOwner = 2
     }
 }
