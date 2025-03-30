@@ -44,19 +44,30 @@ namespace Capstone.Controllers
                 FirstName = userRegistrationModel.FirstName,
                 LastName = userRegistrationModel.LastName,
                 UserType = userRegistrationModel.userTypes,
-                Email=userRegistrationModel.UserName,
+                Email = userRegistrationModel.UserName,
                 EmailConfirmed = true,
             };
 
-            var result = await _userManager.CreateAsync(user,userRegistrationModel.Password);
+            var result = await _userManager.CreateAsync(user, userRegistrationModel.Password);
 
             if (result.Succeeded)
             {
-                return Ok(result);
+                // Generate JWT Token
+                JwtSecurityToken token = await GenerateToken(user);
+
+                var response = new
+                {
+                    Token = new JwtSecurityTokenHandler().WriteToken(token),
+                    FirstName = user.FirstName,
+                    UserID = user.Id,
+                    Username = user.UserName,
+                };
+
+                return Ok(response);
             }
             return BadRequest(new { result.Errors });
-
         }
+
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] UserLoginModel userloginmodel) 
