@@ -37,7 +37,7 @@ namespace Capstone.Controllers
 
         // Add a new farmer
         [HttpPost]
-        public async Task<IActionResult> AddFarmer([FromBody] Farmer farmer)
+        public async Task<IActionResult> AddFarmer([FromBody] user farmer)
         {
             if (farmer == null)
             {
@@ -80,7 +80,7 @@ namespace Capstone.Controllers
 
         // Update farmer details
         [HttpPut("{FarmerID}")]
-        public async Task<IActionResult> UpdateFarmer(int FarmerID, [FromBody] Farmer farmer)
+        public async Task<IActionResult> UpdateFarmer(int FarmerID, [FromBody] user farmer)
         {
             if (farmer == null)
             {

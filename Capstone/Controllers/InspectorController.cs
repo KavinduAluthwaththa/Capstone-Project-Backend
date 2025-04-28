@@ -48,7 +48,7 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Inspector data is required." });
             }
 
-            if (string.IsNullOrWhiteSpace(inspector.Name) || string.IsNullOrWhiteSpace(inspector.Designation))
+            if (string.IsNullOrWhiteSpace(inspector.Name) || string.IsNullOrWhiteSpace(inspector.Location))
             {
                 return BadRequest(new { message = "Name and Designation are required." });
             }
@@ -86,7 +86,7 @@ namespace Capstone.Controllers
                 return NotFound(new { message = "Inspector not found." });
             }
 
-            if (string.IsNullOrWhiteSpace(inspector.Name) || string.IsNullOrWhiteSpace(inspector.Designation))
+            if (string.IsNullOrWhiteSpace(inspector.Name) || string.IsNullOrWhiteSpace(inspector.Location))
             {
                 return BadRequest(new { message = "Name and Designation are required." });
             }
@@ -99,7 +99,7 @@ namespace Capstone.Controllers
             try
             {
                 existingInspector.Name = inspector.Name;
-                existingInspector.Designation = inspector.Designation;
+                existingInspector.Location = inspector.Location;
                 existingInspector.PhoneNumber = inspector.PhoneNumber;
 
                 await _context.SaveChangesAsync();

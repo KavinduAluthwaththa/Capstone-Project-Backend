@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Azure.Core;
+using Capstone.Models.Common.Enums;
 using Capstone.Models.Entities;
 using Capstone.Persistence.Data;
 using Capstone.Shared.Model;
@@ -52,6 +53,41 @@ namespace Capstone.Controllers
 
             if (result.Succeeded)
             {
+                switch (user.UserType)
+                {
+                    case UserTypes.Farmer:
+                        var farmerdet = new user()
+                        {
+                            Name = user.FirstName+" "+user.LastName,
+                            FarmLocation = user.Address,
+                        };
+                        await _context.Farmers.AddAsync(farmerdet);
+                        break;
+
+                     case UserTypes.ShopOwner:
+                        var shopdet = new Shop()
+                        {
+                            Name = user.FirstName + " " + user.LastName,
+                            Location = user.Address,
+                        };
+                        await _context.Shops.AddAsync(shopdet);
+                        break;
+
+                    case UserTypes.Inspector:
+                        var inspectordet = new Inspector()
+                        {
+                            Name = user.FirstName + " " + user.LastName,
+                            Location = user.Address,
+                        };
+                        await _context.Inspectors.AddAsync(inspectordet);
+                        break;
+
+                    default:
+                        return BadRequest(new { message = "Invalid User Type." });
+                }
+
+                await _context.SaveChangesAsync();
+
                 // Generate JWT Token
                 JwtSecurityToken token = await GenerateToken(user);
 

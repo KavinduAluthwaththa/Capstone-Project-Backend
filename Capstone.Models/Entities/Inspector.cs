@@ -7,7 +7,7 @@ namespace Capstone.Models.Entities
         [Key]
         public int InspectorID { get; set; }
         public int PhoneNumber { get; set; }
-        public string Designation { get; set; }
+        public string Location { get; set; }
         public string Name { get; set; }
     }
 }

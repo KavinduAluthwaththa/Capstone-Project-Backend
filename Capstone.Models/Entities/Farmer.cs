@@ -2,7 +2,7 @@
 
 namespace Capstone.Models.Entities
 {
-    public class Farmer
+    public class user
     {
         [Key]
         public int FarmerID { get; set; }

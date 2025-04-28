@@ -6,7 +6,7 @@ namespace Capstone.Models.Entities
     {
         [Key]
         public int ShopID { get; set; }
-        public string Type { get; set; }
+        public string Name { get; set; }
         public int PhoneNumber { get; set; }
         public string Location { get; set; }
     }

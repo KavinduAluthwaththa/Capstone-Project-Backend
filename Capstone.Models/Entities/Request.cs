@@ -15,7 +15,7 @@ namespace Capstone.Models.Entities
         public int ShopID { get; set; }
 
         [ForeignKey("FarmerID")]
-        public virtual Farmer Farmer { get; set; }
+        public virtual user Farmer { get; set; }
 
         [ForeignKey("ShopID")]
         public virtual Shop Shop { get; set; }

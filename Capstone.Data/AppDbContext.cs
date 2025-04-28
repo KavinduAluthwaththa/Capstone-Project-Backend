@@ -12,7 +12,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    public DbSet<Farmer> Farmers { get; set; }
+    public DbSet<user> Farmers { get; set; }
     public DbSet<Crop> Crops { get; set; }
     public DbSet<Disease> Diseases { get; set; }
     public DbSet<Request> Requests { get; set; }

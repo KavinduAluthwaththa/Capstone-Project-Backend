@@ -15,6 +15,6 @@ namespace Capstone.Models.Entities
         public virtual Crop Crop { get; set; }
 
         [ForeignKey("FarmerID")]
-        public virtual Farmer Farmer { get; set; }
+        public virtual user Farmer { get; set; }
     }
 }

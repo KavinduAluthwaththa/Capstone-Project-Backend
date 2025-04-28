@@ -79,7 +79,7 @@ namespace Capstone.Controllers
 
             try
             {
-                existingShop.Type = shop.Type;
+                existingShop.Name = shop.Name;
                 existingShop.PhoneNumber = shop.PhoneNumber;
                 existingShop.Location = shop.Location;
 
