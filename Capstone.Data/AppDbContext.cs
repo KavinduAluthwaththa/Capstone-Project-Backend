@@ -18,8 +18,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Request> Requests { get; set; }
     public DbSet<Shop> Shops { get; set; }
     public DbSet<Item> Items { get; set; }
-    public DbSet<MarketData> MarketDatas { get; set; }
-    public DbSet<Inspector> Inspectors { get; set; }
     public DbSet<Fertilizer> Fertilizers { get; set; }
     public DbSet<Pesticide> Pesticides { get; set; }
     public DbSet<CropShop> CropShops { get; set; }
