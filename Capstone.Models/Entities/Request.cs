@@ -8,6 +8,9 @@ namespace Capstone.Models.Entities
         [Key]
         public int RequestID { get; set; }
         public string Date { get; set; }
+        //in lkr
+        public int Price { get; set; }
+        //in kg
         public int Amount { get; set; }
         //foreign key
         public int FarmerID { get; set; }
