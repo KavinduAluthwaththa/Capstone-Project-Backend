@@ -10,6 +10,7 @@ namespace Capstone.Models.Entities
         //foreign key
         public int CropID { get; set; }
         public string FertilizerType { get; set; }
+        //per hectare kg
         public string RecommendedAmount { get; set; }
 
         [ForeignKey("CropID")]

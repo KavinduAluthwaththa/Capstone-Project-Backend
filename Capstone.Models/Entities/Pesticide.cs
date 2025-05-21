@@ -8,6 +8,7 @@ namespace Capstone.Models.Entities
         public int PesticideID { get; set; }
         public int CropID { get; set; }
         public string PesticideType { get; set; }
+        //per hectare in liters
         public int RecommendedAmount { get; set; }
     }
 }

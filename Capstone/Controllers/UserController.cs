@@ -73,15 +73,6 @@ namespace Capstone.Controllers
                         await _context.Shops.AddAsync(shopdet);
                         break;
 
-                    case UserTypes.Inspector:
-                        var inspectordet = new Inspector()
-                        {
-                            Name = user.FirstName + " " + user.LastName,
-                            Location = user.Address,
-                        };
-                        await _context.Inspectors.AddAsync(inspectordet);
-                        break;
-
                     default:
                         return BadRequest(new { message = "Invalid User Type." });
                 }
