@@ -133,12 +133,12 @@ namespace Capstone.Controllers
 
             var claims = new List<Claim>()
             {
-                new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, user.UserName),
-                new Claim("UserEmail", user.UserName),
-                new Claim("Role", user.UserType.ToString()),
-                new Claim("UserId", user.Id.ToString()),
+                new (JwtRegisteredClaimNames.Sub, user.UserName),
+                new (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new (JwtRegisteredClaimNames.Email, user.UserName),
+                new ("UserEmail", user.UserName),
+                new ("Role", user.UserType.ToString()),
+                new ("UserId", user.Id.ToString()),
             };
 
 
