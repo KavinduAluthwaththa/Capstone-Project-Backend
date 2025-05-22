@@ -47,6 +47,7 @@ namespace Capstone.Controllers
                 UserType = userRegistrationModel.userTypes,
                 Email = userRegistrationModel.UserName,
                 EmailConfirmed = true,
+                Address = userRegistrationModel.Address
             };
 
             var result = await _userManager.CreateAsync(user, userRegistrationModel.Password);
@@ -58,13 +59,13 @@ namespace Capstone.Controllers
                     case UserTypes.Farmer:
                         var farmerdet = new user()
                         {
-                            Name = user.FirstName+" "+user.LastName,
+                            Name = user.FirstName + " " + user.LastName,
                             FarmLocation = user.Address,
                         };
                         await _context.Farmers.AddAsync(farmerdet);
                         break;
 
-                     case UserTypes.ShopOwner:
+                    case UserTypes.ShopOwner:
                         var shopdet = new Shop()
                         {
                             Name = user.FirstName + " " + user.LastName,

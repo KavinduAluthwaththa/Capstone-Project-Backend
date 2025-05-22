@@ -40,28 +40,6 @@ namespace Capstone.Controllers
             return Ok(shop);
         }
 
-        // POST: api/shop
-        [HttpPost]
-        public async Task<IActionResult> AddShop([FromBody] Shop shop)
-        {
-            if (shop == null)
-            {
-                return BadRequest(new { message = "Shop data is required." });
-            }
-
-            try
-            {
-                _context.Shops.Add(shop);
-                await _context.SaveChangesAsync();
-
-                return CreatedAtAction(nameof(GetShopById), new { id = shop.ShopID }, shop);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred while adding the shop.", error = ex.Message });
-            }
-        }
-
         // PUT: api/shop/{id}
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateShop(int id, [FromBody] Shop shop)

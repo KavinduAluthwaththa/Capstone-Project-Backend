@@ -19,7 +19,6 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Shop> Shops { get; set; }
     public DbSet<Item> Items { get; set; }
     public DbSet<Fertilizer> Fertilizers { get; set; }
-    public DbSet<Pesticide> Pesticides { get; set; }
     public DbSet<CropShop> CropShops { get; set; }
     public DbSet<GrowingCrop> GrowingCrops { get; set; }
     public DbSet<CropDisease> CropDiseases  { get; set; }

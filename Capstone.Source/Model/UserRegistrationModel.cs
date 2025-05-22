@@ -20,6 +20,6 @@ namespace Capstone.Shared.Model
         public string ConfirmedPassword { get; set; }
 
         public UserTypes userTypes { get; set; }
-
+        public string Address { get; set; }
     }
 }
