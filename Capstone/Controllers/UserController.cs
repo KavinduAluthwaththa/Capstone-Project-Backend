@@ -60,6 +60,7 @@ namespace Capstone.Controllers
                         var farmerdet = new user()
                         {
                             Name = user.FirstName + " " + user.LastName,
+                            Email = user.Email,
                             FarmLocation = user.Address,
                         };
                         await _context.Farmers.AddAsync(farmerdet);
@@ -69,6 +70,7 @@ namespace Capstone.Controllers
                         var shopdet = new Shop()
                         {
                             Name = user.FirstName + " " + user.LastName,
+                            Email = user.Email,
                             Location = user.Address,
                         };
                         await _context.Shops.AddAsync(shopdet);

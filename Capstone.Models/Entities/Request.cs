@@ -7,6 +7,7 @@ namespace Capstone.Models.Entities
     {
         [Key]
         public int RequestID { get; set; }
+        public string CropName { get; set; }
         public string Date { get; set; }
         //in lkr
         public int Price { get; set; }

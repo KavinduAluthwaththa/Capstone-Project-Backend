@@ -9,6 +9,7 @@ namespace Capstone.Models.Entities
         public string Name { get; set; }
         public string FarmLocation { get; set; }
         public int PhoneNumber { get; set; }
+        public string Email { get; set; }
 
     }
 }

@@ -21,18 +21,44 @@ namespace Capstone.Controllers
         }
 
         // Get all farmers
-        [HttpGet]
-        public async Task<IActionResult> GetAllFarmers()
+        [HttpGet("full")]
+        public async Task<IActionResult> GetAllFarmersFull()
         {
             var farmers = await _context.Farmers
-                .Select(f => new SelectListItem
+                .Select(f => new
                 {
-                    Value = f.FarmerID.ToString(),
-                    Text = f.Name
+                    f.FarmerID,
+                    f.Name,
+                    f.FarmLocation,
+                    f.PhoneNumber
                 })
                 .ToListAsync();
 
             return Ok(farmers);
+        }
+
+        // Get farmer by ID
+        [HttpGet("{Email}")]
+        public async Task<IActionResult> GetFarmerById(string Email)
+        {
+            var farmer = await _context.Farmers
+                .Where(f => f.Email == Email)
+                .Select(f => new
+                {
+                    f.FarmerID,
+                    f.Name,
+                    f.FarmLocation,
+                    f.PhoneNumber,
+                    f.Email
+                })
+                .FirstOrDefaultAsync();
+
+            if (farmer == null)
+            {
+                return NotFound(new { message = "Farmer not found." });
+            }
+
+            return Ok(farmer);
         }
 
         // Add a new farmer
@@ -54,7 +80,7 @@ namespace Capstone.Controllers
                 _context.Farmers.Add(farmer);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetAllFarmers), new { id = farmer.FarmerID }, farmer);
+                return CreatedAtAction(nameof(GetAllFarmersFull), new { id = farmer.FarmerID }, farmer);
             }
             catch (Exception ex)
             {
