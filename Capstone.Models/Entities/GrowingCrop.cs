@@ -10,6 +10,7 @@ namespace Capstone.Models.Entities
         public int CropID { get; set; }
         public int FarmerID { get; set; }
         public string Date { get; set; }
+        public int Amount { get; set; }
 
         [ForeignKey("CropID")]
         public virtual Crop Crop { get; set; }

@@ -31,13 +31,13 @@ namespace Capstone.Controllers
         }
 
         // GET: api/GrowingCrop/{id}
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetGrowingCrop(int id)
+        [HttpGet("{FarmerID}")]
+        public async Task<IActionResult> GetGrowingCrop(int FarmerID)
         {
             var growingCrop = await _context.GrowingCrops
                 .Include(g => g.Crop)
                 .Include(g => g.Farmer)
-                .FirstOrDefaultAsync(g => g.cfid == id);
+                .FirstOrDefaultAsync(g => g.FarmerID == FarmerID);
 
             if (growingCrop == null)
             {
