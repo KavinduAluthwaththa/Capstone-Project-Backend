@@ -18,12 +18,13 @@ namespace Capstone.Models.Entities
         //foreign key
         public int ShopID { get; set; }
 
+        // Availability section
+        public bool IsAvailable { get; set; } 
+
         [ForeignKey("FarmerID")]
         public virtual user Farmer { get; set; }
 
         [ForeignKey("ShopID")]
         public virtual Shop Shop { get; set; }
-
-
     }
 }

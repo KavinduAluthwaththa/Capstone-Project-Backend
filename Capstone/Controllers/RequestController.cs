@@ -20,9 +20,10 @@ namespace Capstone.Controllers
 
         // GET: api/request
         [HttpGet]
-        public async Task<IActionResult> GetAllRequests()
+        public async Task<IActionResult> GetAllAvailableRequests()
         {
             var requests = await _context.Requests
+                .Where(r => r.IsAvailable == true)  // Only get available requests
                 .Include(r => r.Farmer)
                 .Include(r => r.Shop)
                 .ToListAsync();
@@ -31,16 +32,17 @@ namespace Capstone.Controllers
 
         // GET: api/request/{id}
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetRequestById(int id)
+        public async Task<IActionResult> GetAvailableRequestById(int id)
         {
             var request = await _context.Requests
+                .Where(r => r.IsAvailable == true)  // Only check available requests
                 .Include(r => r.Farmer)
                 .Include(r => r.Shop)
                 .FirstOrDefaultAsync(r => r.RequestID == id);
 
             if (request == null)
             {
-                return NotFound(new { message = "Request not found" });
+                return NotFound(new { message = "Request not found or not available" });
             }
 
             return Ok(request);
@@ -55,16 +57,24 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Request data is required." });
             }
 
+            // Set new requests as available by default
+            request.IsAvailable = true;
+
             try
             {
                 _context.Requests.Add(request);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetRequestById), new { id = request.RequestID }, request);
+                return CreatedAtAction(nameof(GetAvailableRequestById),
+                    new { id = request.RequestID }, request);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while adding the request.", error = ex.Message });
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while adding the request.",
+                    error = ex.Message
+                });
             }
         }
 
@@ -77,10 +87,12 @@ namespace Capstone.Controllers
                 return BadRequest(new { message = "Request data is required." });
             }
 
-            var existingRequest = await _context.Requests.FindAsync(id);
+            var existingRequest = await _context.Requests
+                .FirstOrDefaultAsync(r => r.RequestID == id && r.IsAvailable == true);
+
             if (existingRequest == null)
             {
-                return NotFound(new { message = "Request not found" });
+                return NotFound(new { message = "Request not found or not available" });
             }
 
             try
@@ -89,14 +101,23 @@ namespace Capstone.Controllers
                 existingRequest.Amount = request.Amount;
                 existingRequest.FarmerID = request.FarmerID;
                 existingRequest.ShopID = request.ShopID;
+                existingRequest.IsAvailable = request.IsAvailable; // Allow updating availability
 
                 await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Request updated successfully.", request = existingRequest });
+                return Ok(new
+                {
+                    message = "Request updated successfully.",
+                    request = existingRequest
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while updating the request.", error = ex.Message });
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while updating the request.",
+                    error = ex.Message
+                });
             }
         }
 
@@ -104,23 +125,29 @@ namespace Capstone.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRequest(int id)
         {
-            var request = await _context.Requests.FindAsync(id);
+            var request = await _context.Requests
+                .FirstOrDefaultAsync(r => r.RequestID == id && r.IsAvailable == true);
 
             if (request == null)
             {
-                return NotFound(new { message = "Request not found" });
+                return NotFound(new { message = "Request not found or not available" });
             }
 
             try
             {
-                _context.Requests.Remove(request);
+                // Soft delete by setting IsAvailable to false
+                request.IsAvailable = false;
                 await _context.SaveChangesAsync();
 
-                return Ok(new { message = "Request deleted successfully" });
+                return Ok(new { message = "Request marked as unavailable successfully" });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "An error occurred while deleting the request.", error = ex.Message });
+                return StatusCode(500, new
+                {
+                    message = "An error occurred while updating the request.",
+                    error = ex.Message
+                });
             }
         }
     }
