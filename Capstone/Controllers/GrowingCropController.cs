@@ -101,10 +101,10 @@ namespace Capstone.Controllers
         }
 
         // DELETE: api/GrowingCrop/{id}
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGrowingCrop(int id)
+        [HttpDelete("{cfid}")]
+        public async Task<IActionResult> DeleteGrowingCrop(int cfid)
         {
-            var growingCrop = await _context.GrowingCrops.FindAsync(id);
+            var growingCrop = await _context.GrowingCrops.FindAsync(cfid);
             if (growingCrop == null)
             {
                 return NotFound(new { message = "Growing crop record not found" });
