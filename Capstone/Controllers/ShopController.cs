@@ -26,11 +26,11 @@ namespace Capstone.Controllers
             return Ok(shops);
         }
 
-        // GET: api/shop/{id}
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetShopById(int id)
+        // GET: api/shop/{email}
+        [HttpGet("{email}")]
+        public async Task<IActionResult> GetShopById(String email)
         {
-            var shop = await _context.Shops.FirstOrDefaultAsync(s => s.ShopID == id);
+            var shop = await _context.Shops.FirstOrDefaultAsync(s => s.Email == email);
 
             if (shop == null)
             {

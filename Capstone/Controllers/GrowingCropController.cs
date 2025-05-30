@@ -30,24 +30,26 @@ namespace Capstone.Controllers
             return Ok(growingCrops);
         }
 
-        // GET: api/GrowingCrop/{id}
+        // GET: api/GrowingCrop/{FarmerID}
         [HttpGet("{FarmerID}")]
         public async Task<IActionResult> GetGrowingCrop(int FarmerID)
         {
-            var growingCrop = await _context.GrowingCrops
+            var growingCrops = await _context.GrowingCrops
                 .Include(g => g.Crop)
                 .Include(g => g.Farmer)
-                .FirstOrDefaultAsync(g => g.FarmerID == FarmerID);
+                .Where(g => g.FarmerID == FarmerID)
+                .ToListAsync();
 
-            if (growingCrop == null)
+            if (!growingCrops.Any())
             {
-                return NotFound(new { message = "Growing crop record not found" });
+                return NotFound(new { message = "No growing crop records found for this farmer" });
             }
 
-            return Ok(growingCrop);
+            return Ok(growingCrops);
         }
 
-        // POST: api/GrowingCrop
+
+
         [HttpPost]
         public async Task<IActionResult> AddGrowingCrop([FromBody] GrowingCrop growingCrop)
         {
@@ -61,7 +63,7 @@ namespace Capstone.Controllers
                 _context.GrowingCrops.Add(growingCrop);
                 await _context.SaveChangesAsync();
 
-                return CreatedAtAction(nameof(GetGrowingCrop), new { id = growingCrop.cfid }, growingCrop);
+                return Created("", growingCrop);
             }
             catch (Exception ex)
             {

@@ -24,7 +24,7 @@ namespace Capstone.Controllers
         {
             var requests = await _context.Requests
                 .Where(r => r.IsAvailable == true)  // Only get available requests
-                .Include(r => r.Farmer)
+                .Include(r => r.crop)
                 .Include(r => r.Shop)
                 .ToListAsync();
             return Ok(requests);
@@ -36,7 +36,7 @@ namespace Capstone.Controllers
         {
             var request = await _context.Requests
                 .Where(r => r.IsAvailable == true)  // Only check available requests
-                .Include(r => r.Farmer)
+                .Include(r => r.crop)
                 .Include(r => r.Shop)
                 .FirstOrDefaultAsync(r => r.RequestID == id);
 
@@ -47,6 +47,25 @@ namespace Capstone.Controllers
 
             return Ok(request);
         }
+
+        // GET: api/request/shop/{shopId}
+        [HttpGet("shop/{shopId}")]
+        public async Task<IActionResult> GetAvailableRequestsByShopId(int shopId)
+        {
+            var requests = await _context.Requests
+                .Where(r => r.IsAvailable == true && r.ShopID == shopId)
+                .Include(r => r.crop)
+                .Include(r => r.Shop)
+                .ToListAsync();
+
+            if (requests == null || requests.Count == 0)
+            {
+                return NotFound(new { message = "No available requests found for this shop." });
+            }
+
+            return Ok(requests);
+        }
+
 
         // POST: api/request
         [HttpPost]
@@ -99,7 +118,7 @@ namespace Capstone.Controllers
             {
                 existingRequest.Date = request.Date;
                 existingRequest.Amount = request.Amount;
-                existingRequest.FarmerID = request.FarmerID;
+                existingRequest.CropID = request.CropID;
                 existingRequest.ShopID = request.ShopID;
                 existingRequest.IsAvailable = request.IsAvailable; // Allow updating availability
 
