@@ -14,8 +14,9 @@ namespace Capstone.MLModels.CropRecommendation
             var dataView = mlContext.Data.LoadFromEnumerable(new List<CropInput>());
             var pipeline = mlContext.Transforms.ApplyOnnxModel(
                 modelFile: "MLModels/CropRecommendation/crop_recommendation.onnx",
-                inputColumnNames: new[] { "N", "P", "K", "temperature", "humidity", "ph", "rainfall" },
-                outputColumnNames: new[] { "output" });
+                inputColumnNames: new[] { "float_input" },
+                outputColumnNames: new[] { "output_label", "output_probability" } // this is fine
+            );
             var model = pipeline.Fit(dataView);
             _predictionEngine = mlContext.Model.CreatePredictionEngine<CropInput, CropPrediction>(model);
         }

@@ -18,4 +18,10 @@
     <ProjectReference Include="..\Capstone.Source\Capstone.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="MLModels\CropRecommendation\crop_recommendation.onnx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
