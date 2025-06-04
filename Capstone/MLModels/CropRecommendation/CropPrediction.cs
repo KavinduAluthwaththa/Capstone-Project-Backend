@@ -1,7 +1,10 @@
+using Microsoft.ML.Data;
+
 namespace Capstone.MLModels.CropRecommendation
 {
     public class CropPrediction
     {
-        public string[]? output_label { get; set; }
+        [ColumnName("output_label")]
+        public string[] output_label { get; set; } = new string[0];
     }
 }
