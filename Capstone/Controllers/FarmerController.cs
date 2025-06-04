@@ -104,18 +104,13 @@ namespace Capstone.Controllers
             return Ok(new { message = "Farmer deleted successfully." });
         }
 
-        // Update farmer details
+        // Update farmer details - fields are optional
         [HttpPut("{FarmerID}")]
         public async Task<IActionResult> UpdateFarmer(int FarmerID, [FromBody] user farmer)
         {
             if (farmer == null)
             {
                 return BadRequest(new { message = "Farmer data is required." });
-            }
-
-            if (string.IsNullOrWhiteSpace(farmer.Name) || string.IsNullOrWhiteSpace(farmer.FarmLocation) || farmer.PhoneNumber <= 0)
-            {
-                return BadRequest(new { message = "Name, Farm Location, and valid Phone Number are required." });
             }
 
             var existingFarmer = await _context.Farmers.FindAsync(FarmerID);
@@ -126,9 +121,26 @@ namespace Capstone.Controllers
 
             try
             {
-                existingFarmer.Name = farmer.Name;
-                existingFarmer.FarmLocation = farmer.FarmLocation;
-                existingFarmer.PhoneNumber = farmer.PhoneNumber;
+                // Only update fields that have been provided
+                if (!string.IsNullOrEmpty(farmer.Name))
+                {
+                    existingFarmer.Name = farmer.Name;
+                }
+
+                if (!string.IsNullOrEmpty(farmer.FarmLocation))
+                {
+                    existingFarmer.FarmLocation = farmer.FarmLocation;
+                }
+
+                if (farmer.PhoneNumber > 0)
+                {
+                    existingFarmer.PhoneNumber = farmer.PhoneNumber;
+                }
+
+                if (!string.IsNullOrEmpty(farmer.Email))
+                {
+                    existingFarmer.Email = farmer.Email;
+                }
 
                 await _context.SaveChangesAsync();
 

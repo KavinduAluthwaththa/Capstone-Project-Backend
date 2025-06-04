@@ -57,9 +57,28 @@ namespace Capstone.Controllers
 
             try
             {
-                existingShop.Name = shop.Name;
-                existingShop.PhoneNumber = shop.PhoneNumber;
-                existingShop.Location = shop.Location;
+                // Only update fields that have been provided
+                if (!string.IsNullOrEmpty(shop.Name))
+                {
+                    existingShop.Name = shop.Name;
+                }
+
+                // For numeric fields, check if it has a non-default value
+                if (shop.PhoneNumber != 0)
+                {
+                    existingShop.PhoneNumber = shop.PhoneNumber;
+                }
+
+                if (!string.IsNullOrEmpty(shop.Location))
+                {
+                    existingShop.Location = shop.Location;
+                }
+                
+                // Email field can also be updated if provided
+                if (!string.IsNullOrEmpty(shop.Email))
+                {
+                    existingShop.Email = shop.Email;
+                }
 
                 await _context.SaveChangesAsync();
 
