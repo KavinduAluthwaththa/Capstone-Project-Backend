@@ -7,6 +7,7 @@ using Capstone.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using Capstone.Models.Entities;
 using Microsoft.OpenApi.Models;
+using Capstone.MLModels.CropRecommendation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,8 +25,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins("http://localhost:61373",
-            "http://10.0.2.2:65526") // front-end URL
+        policy.WithOrigins("http://localhost:54016",
+            "http://10.0.2.2:65526") //12775ront-end URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -103,6 +104,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddSingleton<CropModelHelper>();
 
 var app = builder.Build();
 

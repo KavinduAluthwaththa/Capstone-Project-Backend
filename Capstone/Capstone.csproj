@@ -16,6 +16,8 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Identity.Web" Version="3.2.0" />
     <PackageReference Include="Microsoft.Identity.Web.DownstreamApi" Version="3.2.0" />
+    <PackageReference Include="Microsoft.ML" Version="4.0.2" />
+    <PackageReference Include="Microsoft.ML.OnnxTransformer" Version="4.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
@@ -23,6 +25,12 @@
   <ItemGroup>
     <ProjectReference Include="..\Capstone.Data\Capstone.Persistence.csproj" />
     <ProjectReference Include="..\Capstone.Source\Capstone.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="MLModels\CropRecommendation\crop_recommendation.onnx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
