@@ -1,5 +1,6 @@
 using Microsoft.ML;
 using Microsoft.ML.Transforms.Onnx;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -65,9 +66,15 @@ namespace Capstone.MLModels.CropRecommendation
         {
             try
             {
-                Console.WriteLine($"Predicting for input: [{string.Join(", ", input?.float_input ?? new float[0])}]");
+                // Check if input is properly set
+                if (input == null)
+                {
+                    throw new ArgumentNullException(nameof(input), "Input cannot be null");
+                }
                 
-                if (input?.float_input == null || input.float_input.Length != 7)
+                Console.WriteLine($"Predicting for input: [{string.Join(", ", input.FloatInput ?? new float[0])}]");
+                
+                if (input.FloatInput == null || input.FloatInput.Length != 7)
                 {
                     throw new ArgumentException("Input must contain exactly 7 float values");
                 }
