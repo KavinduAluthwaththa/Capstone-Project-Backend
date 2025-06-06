@@ -23,21 +23,21 @@ namespace Capstone.Controllers
         {
             try
             {
-                _logger.LogInformation("Received prediction request with input: {Input}", 
-                    input?.float_input != null ? string.Join(", ", input.float_input) : "null");
+                _logger.LogInformation("Received prediction request with input: {Input}",
+                    input != null ? string.Join(", ", input.FloatInput) : "null");
 
-                if (input?.float_input == null)
+                if (input?.FloatInput == null)
                 {
                     return BadRequest("Input cannot be null");
                 }
 
-                if (input.float_input.Length != 7)
+                if (input.FloatInput.Length != 7)
                 {
-                    return BadRequest($"Expected 7 input values, got {input.float_input.Length}");
+                    return BadRequest($"Expected 7 input values, got {input.FloatInput.Length}");
                 }
 
                 var result = _modelHelper.Predict(input);
-                
+
                 if (string.IsNullOrEmpty(result.Label))
                     return BadRequest("No crop could be predicted for the given input.");
 
