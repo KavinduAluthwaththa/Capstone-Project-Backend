@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using Capstone.Models.Entities;
 using Microsoft.OpenApi.Models;
 using Capstone.MLModels.CropRecommendation;
+using Capstone.MLModels.DiseaseIdentification.Rice;
+using Capstone.MLModels.DiseaseIdentification.Potato;
+using Capstone.MLModels.DiseaseIdentification.Pumpkin;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,6 +108,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<CropModelHelper>();
+builder.Services.AddSingleton<RiceModelHelper>();
+builder.Services.AddSingleton<PotatoModelHelper>();
+builder.Services.AddSingleton<PumpkinModelHelper>();
 
 var app = builder.Build();
 
