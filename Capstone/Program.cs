@@ -28,8 +28,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins("http://localhost:58790",
-            "http://10.0.2.2:65526") //12775ront-end URL
+        policy.WithOrigins("http://localhost:3000") //front-end URL
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
