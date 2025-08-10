@@ -95,7 +95,7 @@ namespace Capstone.Controllers
 
                 return Ok(response);
             }
-            return BadRequest(new { result.Errors });
+            return BadRequest(new { message = "Registration failed", errors = result.Errors });
         }
 
 
@@ -112,7 +112,7 @@ namespace Capstone.Controllers
 
             if (!result.Succeeded)
             {
-                return Unauthorized();
+                return Unauthorized(new { message = "Invalid username or password." });
             }
 
             JwtSecurityToken token = await GenerateToken(existingUser);

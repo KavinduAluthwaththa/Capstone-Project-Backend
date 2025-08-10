@@ -23,12 +23,12 @@ using (var random = RandomNumberGenerator.Create())
     random.GetBytes(secretBytes);
 }
 
-// CORS policy configuration
+// CORS policy configuration - Allow all origins for testing
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin", policy =>
     {
-        policy.WithOrigins("http://localhost:3000") //front-end URL
+        policy.AllowAnyOrigin()
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
